@@ -20,19 +20,10 @@ export const Options = {
 }
 export default function () {
   const credentials = `${username}:${password}`;
-
-  // Passing username and password as part of the URL will
-  // allow us to authenticate using HTTP Basic Auth.
   const url = `https://baoapitesting.atlassian.net/rest/api/2/issue/`;
   let data ='{"fields":{"project":{"id":"10000"},"summary":"Bao test 1122 K6","description": "K6","issuetype":{"name":"Bug"}}}'
-  
-
   const encodedCredentials = encoding.b64encode(credentials);
-
   let res = http.post(url,data,{headers: {Authorization: `Basic ${encodedCredentials}`,"Content-Type": `application/json;charset=UTF-8`}})
-
-  // Verify response (checking the echoed data from the httpbin.test.k6.io
-  // basic auth test API endpoint)
   check(res, {
     'status is 200': (r) => r.status === 201,
     'Id is generated automatically': (r) => r.body.id !== null
