@@ -1,5 +1,5 @@
 import encoding from 'k6/encoding';
-import http, { options } from 'k6/http';
+import http from 'k6/http';
 import { check } from 'k6';
 
 const username = 'baonguyen01121995@gmail.com';
