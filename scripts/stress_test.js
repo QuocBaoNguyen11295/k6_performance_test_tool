@@ -1,10 +1,18 @@
 import encoding from 'k6/encoding';
 import http from 'k6/http';
 import { check } from 'k6';
+import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
+import { textSummary } from "https://jslib.k6.io/k6-summary/0.0.1/index.js";
 
 const username = 'baonguyen01121995@gmail.com';
-const password = 'U5vgjiVwxWqvXJ9Pig5H8949';
+const password = 'LhTjMIUxz14ohocPVOPs92DD';
 
+export function handleSummary(data) {
+  return {
+    "result.html": htmlReport(data),
+    stdout: textSummary(data, { indent: " ", enableColors: true }),
+  };
+}
 export const options = {
   stages: [
     { duration: '2m', target: 100 }, // below normal load
@@ -17,6 +25,9 @@ export const options = {
     { duration: '5m', target: 400 },
     { duration: '10m', target: 0 }, // scale down. Recovery stage.
   ],
+  thresholds: {
+    'http_req_duration': ['p(99)<1500'] // 99% of requests must complete below 1.5s
+  },
 }
 export default function () {
   const credentials = `${username}:${password}`;
