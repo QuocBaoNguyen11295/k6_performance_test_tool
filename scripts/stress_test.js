@@ -4,12 +4,12 @@ import { check } from 'k6';
 import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { textSummary } from "https://jslib.k6.io/k6-summary/0.0.1/index.js";
 
-const username = 'baonguyen01121995@gmail.com';
-const password = 'LhTjMIUxz14ohocPVOPs92DD';
+const username = '';
+const password = '';
 
 export function handleSummary(data) {
   return {
-    "result.html": htmlReport(data),
+    "result_stress_test.html": htmlReport(data),
     stdout: textSummary(data, { indent: " ", enableColors: true }),
   };
 }
@@ -31,7 +31,7 @@ export const options = {
 }
 export default function () {
   const credentials = `${username}:${password}`;
-  const url = `https://baoapitesting.atlassian.net/rest/api/2/issue/`;
+  const url = ``;
   let data ='{"fields":{"project":{"id":"10000"},"summary":"Bao Stress Test","description": "K6","issuetype":{"name":"Bug"}}}'
   const encodedCredentials = encoding.b64encode(credentials);
   let res = http.post(url,data,{headers: {Authorization: `Basic ${encodedCredentials}`,"Content-Type": `application/json;charset=UTF-8`}})
